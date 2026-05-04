@@ -9,7 +9,7 @@
     "browser": true,
     "node": true
   },
-  "ignorePatterns": ["**/node_modules/", "**/build/", "**/coverage/", "**/lib/", "**/dist/"],
+  "ignorePatterns": ["**/node_modules/", "**/build/", "**/coverage/", "**/dist/"],
   "rules": {
     "constructor-super": "error",
     "for-direction": "error",

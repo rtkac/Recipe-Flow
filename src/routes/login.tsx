@@ -35,7 +35,7 @@ function RouteComponent() {
   return (
     <div>
       <div>Hello "/login"!</div>
-      <button onClick={handleOnSignIn}>Sign ip</button>
+      <button onClick={handleOnSignIn}>Sign In</button>
       <br />
       <button onClick={handleOnSignUp}>Sign Up</button>
       <br />
