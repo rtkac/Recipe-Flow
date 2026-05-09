@@ -1,0 +1,21 @@
+output: false
+no_tty: true
+
+pre-commit:
+  parallel: true
+  jobs:
+    - name: 'Check'
+      group:
+        pipped: true
+        jobs:
+          - name: Format
+            run: bun oxfmt --no-error-on-unmatched-pattern {staged_files}
+            stage_fixed: true
+          - name: Lint
+            run: bun oxlint --fix --no-error-on-unmatched-pattern {staged_files}
+            stage_fixed: true
+
+commit-msg:
+  commands:
+    commitlint:
+      run: bun commitlint --edit

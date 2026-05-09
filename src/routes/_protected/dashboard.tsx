@@ -15,7 +15,7 @@ function RouteComponent() {
     await signOut({
       fetchOptions: {
         onSuccess: () => {
-          navigate({ to: '/login' });
+          navigate({ to: '/sign-in' });
         },
       },
     });
