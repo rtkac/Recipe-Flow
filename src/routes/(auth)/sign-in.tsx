@@ -7,22 +7,13 @@ import { Button } from '@/components/ui/button';
 import { Field, FieldError, FieldGroup, FieldLabel, FieldSet } from '@/components/ui/field';
 import { Input } from '@/components/ui/input';
 import { Spinner } from '@/components/ui/spinner';
+import { m } from '@/paraglide/messages';
 import { signInUserOptions } from '@/queries/auth';
 
 export const Route = createFileRoute('/(auth)/sign-in')({
   component: RouteComponent,
 });
 
-// const formSchema = z.object({
-//   email: z.email('Invalid email address.'),
-//   password: z
-//     .string()
-//     .min(8, 'Password must be at least 8 characters.')
-//     .max(100, 'Password must be at most 100 characters.')
-//     .regex(/\p{Lu}/u, 'Password must contain at least one uppercase letter.')
-//     .regex(/[\p{N}\p{P}\p{S}]/u, 'Password must contain at least one number or special character.')
-//     .refine((v) => !/\s/.test(v), 'Password must not contain whitespace.'),
-// });
 const formSchema = z.object({
   email: z.email('Invalid email address.'),
   password: z.string().nonempty('Password is required.'),
@@ -47,8 +38,8 @@ function RouteComponent() {
   return (
     <div className="flex flex-col gap-8 w-full max-w-md">
       <div className="flex flex-col gap-2">
-        <h1 className="text-4xl font-bold">Welcome back</h1>
-        <p>Enter your credentials to access your digital kitchen.</p>
+        <h1 className="text-4xl font-bold">{m.sign_in_title()}</h1>
+        <p>{m.sign_in_desc()}</p>
       </div>
       <form
         onSubmit={(e) => {
@@ -62,7 +53,7 @@ function RouteComponent() {
               <form.Field name="email">
                 {(field) => (
                   <Field>
-                    <FieldLabel htmlFor={field.name}>EMAIL ADDRESS</FieldLabel>
+                    <FieldLabel htmlFor={field.name}>{m.sign_in_email_label()}</FieldLabel>
                     <Input
                       id={field.name}
                       name={field.name}
@@ -81,7 +72,7 @@ function RouteComponent() {
               <form.Field name="password">
                 {(field) => (
                   <Field>
-                    <FieldLabel htmlFor={field.name}>PASSWORD</FieldLabel>
+                    <FieldLabel htmlFor={field.name}>{m.sign_in_password_label()}</FieldLabel>
                     <Input
                       id={field.name}
                       name={field.name}
@@ -108,11 +99,11 @@ function RouteComponent() {
               )}
             </form.Subscribe>
           </Field>
-          {isError && <FieldError>Failed to sign in. Invalid email or password.</FieldError>}
+          {isError && <FieldError>{m.sign_in_error_message()}</FieldError>}
         </FieldGroup>
       </form>
       <p>
-        New to the flow? <Link to="/">Register</Link>
+        {m.sign_in_register_desc()} <Link to="/sign-up">{m.sign_in_button_register()}</Link>
       </p>
     </div>
   );

@@ -1,0 +1,10 @@
+{
+  "$schema": "https://inlang.com/schema/inlang-message-format",
+  "sign_in_title": "Welcome back",
+  "sign_in_desc": "Enter your credentials to access your digital kitchen.",
+  "sign_in_email_label": "EMAIL ADDRESS",
+  "sign_in_password_label": "PASSWORD",
+  "sign_in_error_message": "Failed to sign in. Invalid email or password.",
+  "sign_in_register_desc": "New to the flow?",
+  "sign_in_button_register": "Register"
+}

@@ -4,6 +4,8 @@ import { TanStackRouterDevtoolsPanel } from '@tanstack/react-router-devtools';
 
 import appCss from '../styles.css?url';
 
+import { getLocale } from '@/paraglide/runtime';
+
 export const Route = createRootRoute({
   head: () => ({
     meta: [
@@ -23,6 +25,10 @@ export const Route = createRootRoute({
         rel: 'stylesheet',
         href: appCss,
       },
+      {
+        rel: 'manifest',
+        href: '/manifest.json',
+      },
     ],
   }),
   shellComponent: RootDocument,
@@ -30,7 +36,7 @@ export const Route = createRootRoute({
 
 function RootDocument({ children }: { children: React.ReactNode }) {
   return (
-    <html lang="en">
+    <html lang={getLocale()}>
       <head>
         <HeadContent />
       </head>
