@@ -1,6 +1,6 @@
 import { createFileRoute } from '@tanstack/react-router';
 
-import { signOut } from '@/lib/auth-client';
+import { signOut } from '@/lib/auth/auth-client';
 
 export const Route = createFileRoute('/_protected/dashboard')({
   component: RouteComponent,

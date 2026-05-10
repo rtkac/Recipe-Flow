@@ -1,7 +1,13 @@
 import { type MutationOptions } from '@tanstack/react-query';
 
-import { signIn, signUp } from '@/lib/auth-client';
-import { SignInBody, SignUpBody } from '@/types/auth';
+import { AuthErrorCode } from '../-types';
+import { SignInBody, SignUpBody } from '../-types';
+
+import { signIn, signUp } from '@/lib/auth/auth-client';
+
+type ApiError = Error & {
+  code: AuthErrorCode | undefined;
+};
 
 const signUpUser = async (body: SignUpBody) => {
   const response = await signUp.email({
@@ -10,13 +16,13 @@ const signUpUser = async (body: SignUpBody) => {
   });
 
   if (response.error) {
-    throw new Error(response.error.message);
+    throw response.error;
   }
 
   return response.data;
 };
 
-export const signUpUserOptions = (): MutationOptions<unknown, Error, SignUpBody> => ({
+export const signUpUserOptions = (): MutationOptions<unknown, ApiError, SignUpBody> => ({
   mutationFn: (body) => signUpUser(body),
 });
 
@@ -28,12 +34,12 @@ const signInUser = async (body: SignInBody) => {
   });
 
   if (response.error) {
-    throw new Error(response.error.message);
+    throw response.error;
   }
 
   return response.data;
 };
 
-export const signInUserOptions = (): MutationOptions<unknown, Error, SignInBody> => ({
+export const signInUserOptions = (): MutationOptions<unknown, ApiError, SignInBody> => ({
   mutationFn: (body) => signInUser(body),
 });

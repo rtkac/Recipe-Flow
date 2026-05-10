@@ -3,20 +3,21 @@ import { useMutation } from '@tanstack/react-query';
 import { createFileRoute, Link } from '@tanstack/react-router';
 import { z } from 'zod';
 
+import { signInUserOptions } from './-queries/auth';
+
 import { Button } from '@/components/ui/button';
 import { Field, FieldError, FieldGroup, FieldLabel, FieldSet } from '@/components/ui/field';
 import { Input } from '@/components/ui/input';
 import { Spinner } from '@/components/ui/spinner';
 import { m } from '@/paraglide/messages';
-import { signInUserOptions } from '@/queries/auth';
 
 export const Route = createFileRoute('/(auth)/sign-in')({
   component: RouteComponent,
 });
 
 const formSchema = z.object({
-  email: z.email('Invalid email address.'),
-  password: z.string().nonempty('Password is required.'),
+  email: z.email(m.sign_in_email_validation_error_message()),
+  password: z.string().nonempty(m.sign_in_password_validation_error_message()),
 });
 
 function RouteComponent() {
@@ -28,9 +29,7 @@ function RouteComponent() {
     validators: {
       onSubmit: formSchema,
     },
-    onSubmit: async ({ value }) => {
-      await mutateAsync(value);
-    },
+    onSubmit: ({ value }) => mutateAsync(value),
   });
 
   const { mutateAsync, isError } = useMutation(signInUserOptions());
@@ -61,7 +60,7 @@ function RouteComponent() {
                       onChange={(e) => field.handleChange(e.target.value)}
                       onBlur={field.handleBlur}
                       type="email"
-                      placeholder="you@example.com"
+                      placeholder={m.sign_in_email_placeholder()}
                     />
                     {field.state.meta.isTouched && !field.state.meta.isValid && (
                       <FieldError errors={field.state.meta.errors} />
@@ -80,7 +79,7 @@ function RouteComponent() {
                       onChange={(e) => field.handleChange(e.target.value)}
                       onBlur={field.handleBlur}
                       type="password"
-                      placeholder="••••••••"
+                      placeholder={m.sign_in_password_placeholder()}
                     />
                     {field.state.meta.isTouched && !field.state.meta.isValid && (
                       <FieldError errors={field.state.meta.errors} />
@@ -94,7 +93,7 @@ function RouteComponent() {
             <form.Subscribe selector={(state) => state.isSubmitting}>
               {(isSubmitting) => (
                 <Button type="submit" disabled={isSubmitting} size="lg" className="w-full">
-                  Login {isSubmitting && <Spinner data-icon="inline-start" />}
+                  {m.sign_in_button_login()} {isSubmitting && <Spinner data-icon="inline-start" />}
                 </Button>
               )}
             </form.Subscribe>
@@ -103,7 +102,7 @@ function RouteComponent() {
         </FieldGroup>
       </form>
       <p>
-        {m.sign_in_register_desc()} <Link to="/sign-up">{m.sign_in_button_register()}</Link>
+        {m.sign_in_register_desc()} <Link to="/sign-up">{m.sign_in_register_button()}</Link>
       </p>
     </div>
   );
